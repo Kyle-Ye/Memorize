@@ -12,24 +12,40 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @EnvironmentObject var viewModel: EmojiMemoryGame
     var body: some View {
-        VStack {
-            Button("New Game") {
-                self.viewModel.newGame()
-            }
+        GeometryReader { geometry in
+            VStack {
+                Button("New Game") {
+                    self.viewModel.newGame()
+                }.font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.newGameFontFactor)))
 
-            Grid(viewModel.cards) { card in
-                CardView(card: card).onTapGesture {
-                    self.viewModel.choose(card: card)
+                Grid(self.viewModel.cards) { card in
+                    CardView(card: card).onTapGesture {
+                        self.viewModel.choose(card: card)
+                    }
+
+                    .padding(5)
                 }
-
-                .padding(5)
-            }
-            .padding()
-            HStack {
-                Text("score: \(self.viewModel.score)")
-                Text("Theme: \(self.viewModel.theme.name)")
+                .padding()
+                HStack {
+                    Text("score: \(self.viewModel.score)")
+                        .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
+                        .padding(.leading)
+                    Spacer()
+                    Text("Theme: \(self.viewModel.theme.name)")
+                        .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
+                        .padding(.trailing)
+                }
             }
         }
+    }
+
+    // MARK: - Drawing Constants
+
+    let newGameFontFactor: CGFloat = 0.05
+    let scoreFontFactor: CGFloat = 0.05
+    let themeFontFactor: CGFloat = 0.04
+    func fontSize(for size: CGSize, fontScaleFactor: CGFloat) -> CGFloat {
+        min(size.width, size.width) * fontScaleFactor
     }
 }
 
@@ -39,11 +55,9 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             EmojiMemoryGameView()
                 .environmentObject(world)
-                .environment(\.colorScheme, .dark)
                 .previewDevice("iPhone Xs")
             EmojiMemoryGameView()
                 .environmentObject(world)
-                .environment(\.colorScheme, .dark)
                 .previewDevice("iPad Pro (12.9-inch)")
         }
     }
