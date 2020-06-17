@@ -10,25 +10,39 @@
 import SwiftUI
 
 struct EmojiMemoryGameView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @EnvironmentObject var viewModel: EmojiMemoryGame
     var body: some View {
-        Grid(viewModel.cards) { card in
-            CardView(card: card).onTapGesture {
-                self.viewModel.choose(card: card)
+        VStack {
+            Button("New Game") {
+                self.viewModel.newGame()
             }
-            .padding(5)
+
+            Grid(viewModel.cards) { card in
+                CardView(card: card).onTapGesture {
+                    self.viewModel.choose(card: card)
+                }
+
+                .padding(5)
+            }
+            .padding()
+            HStack {
+                Text("score: \(self.viewModel.score)")
+                Text("Theme: \(self.viewModel.theme.name)")
+            }
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let world = EmojiMemoryGame()
     static var previews: some View {
         Group {
-            EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+            EmojiMemoryGameView()
+                .environmentObject(world)
                 .environment(\.colorScheme, .dark)
                 .previewDevice("iPhone Xs")
-            EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+            EmojiMemoryGameView()
+                .environmentObject(world)
                 .environment(\.colorScheme, .dark)
                 .previewDevice("iPad Pro (12.9-inch)")
         }

@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct CardView: View {
+    @EnvironmentObject var viewModel: EmojiMemoryGame
+
     var card: MemoryGame<String>.Card
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +23,7 @@ struct CardView: View {
         ZStack {
             if card.isFaceUp {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
-                    .fill(Color.white)
+                    .fill(viewModel.theme.cardFaceUpColor)
                 RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
                     .stroke(lineWidth: edgeLineWidth)
                 Text(self.card.content)
@@ -32,7 +34,7 @@ struct CardView: View {
             }
         }
         .font(.system(size: fontSize(for: size)))
-        .foregroundColor(Color.orange)
+        .foregroundColor(viewModel.theme.cardFaceDownColor)
     }
 
     // MARK: - Drawing Constants
@@ -47,6 +49,7 @@ struct CardView: View {
 }
 
 struct CardView_Previews: PreviewProvider {
+    static let world = EmojiMemoryGame()
     static var previews: some View {
         VStack {
             HStack {
@@ -58,5 +61,6 @@ struct CardView_Previews: PreviewProvider {
                 CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: true, content: "🐷"))
             }
         }
+        .environmentObject(world)
     }
 }

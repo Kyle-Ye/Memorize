@@ -11,25 +11,51 @@ import Foundation
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model: MemoryGame<Emoji> = createMemoryGame()
 
-    static func createMemoryGame() -> MemoryGame<String> {
-        let emojis = ["🥕", "🐶", "🐷", "🐰", "🐸", "🐒", "🐴"].shuffled()
-        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2 ... 5)) { pairIndex in
-            emojis[pairIndex]
+    static var themes: [EmojiTheme] = [
+        .init(name: "Halloween", contents: ["👻", "🎃", "🕷"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
+        .init(name: "Faces", contents: ["😀", "😃", "😄", "😁", "😆"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
+        .init(name: "Animals", contents: ["🐶","🐱","🐭","🐹","🐰","🙊"],  cardFaceDownColor: .pink, cardFaceUpColor: .blue),
+        .init(name: "Fruit", contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .red)]
+
+    static func createMemoryGame() -> EmojiGame {
+        let theme = themes.randomElement()!
+        let contents = theme.contents.shuffled()
+        return MemoryGame<String>(theme: theme) { pairIndex in
+            contents[pairIndex]
         }
     }
 
     // MARK: - Access to the Model
 
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: [EmojiCard] {
         model.cards
+    }
+
+    var score: Int {
+        model.score
+    }
+
+    var theme: EmojiTheme {
+        model.theme
     }
 
     // MARK: - Intent(s)
 
-    func choose(card: MemoryGame<String>.Card) {
+    func choose(card: EmojiCard) {
         objectWillChange.send()
         model.choose(card: card)
     }
+
+    func newGame() {
+        model = EmojiMemoryGame.createMemoryGame()
+    }
+}
+
+extension EmojiMemoryGame {
+    public typealias Emoji = String
+    public typealias EmojiGame = MemoryGame<Emoji>
+    public typealias EmojiTheme = EmojiGame.Theme
+    public typealias EmojiCard = EmojiGame.Card
 }
