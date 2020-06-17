@@ -9,24 +9,54 @@
 import SwiftUI
 
 struct CardView: View {
-    @State var card: MemoryGame<String>.Card
+    var card: MemoryGame<String>.Card
     var body: some View {
+        GeometryReader { geometry in
+            self.body(for: geometry.size)
+        }
+        .aspectRatio(aspectRatio, contentMode: .fit)
+    }
+
+    func body(for size: CGSize) -> some View {
         ZStack {
             if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10.0, style: .circular)
+                RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
                     .fill(Color.white)
-                RoundedRectangle(cornerRadius: 10.0, style: .circular)
-                    .stroke(lineWidth: 3)
-                Text(card.content)
+                RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
+                    .stroke(lineWidth: edgeLineWidth)
+                Text(self.card.content)
             } else {
-                RoundedRectangle(cornerRadius: 10.0)
+                if !card.isMatched {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                }
             }
         }
+        .font(.system(size: fontSize(for: size)))
+        .foregroundColor(Color.orange)
+    }
+
+    // MARK: - Drawing Constants
+
+    let cornerRadius: CGFloat = 10
+    let edgeLineWidth: CGFloat = 3
+    let fontScaleFactor: CGFloat = 0.75
+    let aspectRatio: CGFloat = 2.0 / 3.0
+    func fontSize(for size: CGSize) -> CGFloat {
+        min(size.width, size.width) * fontScaleFactor
     }
 }
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(card: MemoryGame<String>.Card(id: 3, content: "🐶"))
+        VStack {
+            HStack {
+                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: true, content: "🐶"))
+                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: false, content: "🐷"))
+            }
+            HStack {
+                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: false, content: "🐶"))
+                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: true, content: "🐷"))
+            }
+        }
     }
 }
