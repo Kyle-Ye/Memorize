@@ -14,6 +14,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card]
     private(set) var theme: Theme
     private(set) var score = 0
+    private var seenCards = Set<Int>()
+    private let successScore = 2
+    private let failScore = -1
 
     init(theme: Theme, cardContentFactory: (Int) -> CardContent) {
         self.theme = theme
@@ -40,11 +43,21 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         print("card chosen: \(card)")
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
             if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
+                cards[chosenIndex].isFaceUp = true
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += successScore
+                } else {
+                    if seenCards.contains(potentialMatchIndex) {
+                        score += failScore
+                    }
+                    if seenCards.contains(chosenIndex) {
+                        score += failScore
+                    }
                 }
-                cards[chosenIndex].isFaceUp = true
+                seenCards.insert(chosenIndex)
+                seenCards.insert(potentialMatchIndex)
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
