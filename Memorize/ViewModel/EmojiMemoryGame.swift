@@ -13,15 +13,15 @@ import SwiftUI
 class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<Emoji> = createMemoryGame()
 
-    static var themes: [EmojiTheme] = [
+    private static var themes: [EmojiTheme] = [
         .init(name: "Halloween", contents: ["👻", "🎃", "🕷"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
         .init(name: "Faces", contents: ["😀", "😃", "😄", "😁", "😆"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
-        .init(name: "Animals", contents: ["🐶","🐱","🐭","🐹","🐰","🙊"],  cardFaceDownColor: .pink, cardFaceUpColor: .blue),
+        .init(name: "Animals", contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊"], cardFaceDownColor: .pink, cardFaceUpColor: .blue),
         .init(name: "Fruit", contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .red),
-        .init(name:"Sports", contents: ["⚽️","🏀","🏈","⚾️","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓"], cardFaceDownColor: .blue, cardFaceUpColor: .white),
-        .init(name: "Music", contents: ["🎹","🥁","🎼","🎷","🎻","🪕","🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .yellow)]
+        .init(name: "Sports", contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], cardFaceDownColor: .blue, cardFaceUpColor: .white),
+        .init(name: "Music", contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .yellow)]
 
-    static func createMemoryGame() -> EmojiGame {
+    private static func createMemoryGame() -> EmojiGame {
         let theme = themes.randomElement()!
         let contents = theme.contents.shuffled()
         return MemoryGame<String>(theme: theme) { pairIndex in
