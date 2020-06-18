@@ -26,6 +26,10 @@ struct CardView: View {
                     .fill(viewModel.theme.cardFaceUpColor)
                 RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
                     .stroke(lineWidth: edgeLineWidth)
+                Pie(startAngle: Angle.degrees(0 - 90), endAngle: Angle.degrees(300 - 90), clockwise: true)
+                    .padding(5)
+                    .opacity(0.2)
+
                 Text(self.card.content)
             } else {
                 if !card.isMatched {
@@ -41,7 +45,7 @@ struct CardView: View {
 
     private let cornerRadius: CGFloat = 20
     private let edgeLineWidth: CGFloat = 6
-    private let fontScaleFactor: CGFloat = 0.75
+    private let fontScaleFactor: CGFloat = 0.7
     private let aspectRatio: CGFloat = 2.0 / 3.0
     private func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.width) * fontScaleFactor

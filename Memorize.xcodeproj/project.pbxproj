@@ -20,6 +20,7 @@
 		274C03662498CB0000C2ED7E /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C03652498CB0000C2ED7E /* MemoryGame.swift */; };
 		274C03682498CC0D00C2ED7E /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C03672498CC0D00C2ED7E /* EmojiMemoryGame.swift */; };
 		274C036E2499139300C2ED7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C036D2499139300C2ED7E /* CardView.swift */; };
+		27A3EE01249B487B00BB64B7 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A3EE00249B487B00BB64B7 /* Pie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		274C03652498CB0000C2ED7E /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		274C03672498CC0D00C2ED7E /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 		274C036D2499139300C2ED7E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		27A3EE00249B487B00BB64B7 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				27196D54249A54630063B7CD /* EmojiMemoryGameView.swift */,
 				27196D53249A54630063B7CD /* Grid.swift */,
 				274C036D2499139300C2ED7E /* CardView.swift */,
+				27A3EE00249B487B00BB64B7 /* Pie.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				274C036E2499139300C2ED7E /* CardView.swift in Sources */,
 				27196D52249A54500063B7CD /* Array+Identifiable.swift in Sources */,
 				27196D50249A54500063B7CD /* GridLayout.swift in Sources */,
+				27A3EE01249B487B00BB64B7 /* Pie.swift in Sources */,
 				274C03682498CC0D00C2ED7E /* EmojiMemoryGame.swift in Sources */,
 				27196D51249A54500063B7CD /* Array+Only.swift in Sources */,
 			);
