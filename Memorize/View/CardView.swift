@@ -49,7 +49,7 @@ struct CardView: View {
                     .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
                     .animation(card.isMatched ? Animation.linear(duration: 1.0).repeatForever(autoreverses: false) : .default)
             }
-            .cardify(isFaceUp: card.isFaceUp)
+            .cardify(isFaceUp: card.isFaceUp, faceUpColor: viewModel.theme.cardFaceUpColor)
             .font(.system(size: fontSize(for: size)))
             .foregroundColor(viewModel.theme.cardFaceDownColor)
             .transition(.scale)

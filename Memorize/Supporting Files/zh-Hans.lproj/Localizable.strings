@@ -5,6 +5,14 @@
   Created by 叶絮雷 on 2020/6/18.
   Copyright © 2020 KyleYe. All rights reserved.
 */
-"new Game" = "新游戏";
+"new Game" = "重置游戏";
 "score" = "分数";
 "theme" = "主题";
+
+"Themes" = "主题集";
+"Halloween" = "万圣节";
+"Faces" = "人脸";
+"Animals" = "动物";
+"Fruits" = "水果";
+"Balls" = "球类运动";
+"Music" = "乐器";

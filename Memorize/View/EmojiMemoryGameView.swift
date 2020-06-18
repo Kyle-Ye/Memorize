@@ -31,11 +31,11 @@ struct EmojiMemoryGameView: View {
                 }
                 .padding()
                 HStack {
-                    Text("\(NSLocalizedString("score", comment: "The score of the game")):  \(self.viewModel.score)")
+                    Text("\("score".getLocalized()):  \(self.viewModel.score)")
                         .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
                         .padding(.leading)
                     Spacer()
-                    Text("\(NSLocalizedString("theme", comment: "The theme name of the game")):  \(self.viewModel.theme.name)")
+                    Text("\("theme".getLocalized()):  \(self.viewModel.theme.name)")
                         .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
                         .padding(.trailing)
                 }
@@ -53,7 +53,7 @@ struct EmojiMemoryGameView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct EmojiMemoryGameView_Previews: PreviewProvider {
     static let world = EmojiMemoryGame()
     static var previews: some View {
         Group {
