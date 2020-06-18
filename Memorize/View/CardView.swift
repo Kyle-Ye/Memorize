@@ -19,26 +19,19 @@ struct CardView: View {
         .aspectRatio(aspectRatio, contentMode: .fit)
     }
 
+    @ViewBuilder
     private func body(for size: CGSize) -> some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
-                    .fill(viewModel.theme.cardFaceUpColor)
-                RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
-                    .stroke(lineWidth: edgeLineWidth)
-                Pie(startAngle: Angle.degrees(0 - 90), endAngle: Angle.degrees(300 - 90), clockwise: true)
+        if card.isFaceUp || !card.isMatched {
+            ZStack {
+                Pie(startAngle: Angle.degrees(0 - 90), endAngle: Angle.degrees(20 - 90), clockwise: true)
                     .padding(5)
                     .opacity(0.2)
-
                 Text(self.card.content)
-            } else {
-                if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                }
             }
+            .cardify(isFaceUp: card.isFaceUp)
+            .font(.system(size: fontSize(for: size)))
+            .foregroundColor(viewModel.theme.cardFaceDownColor)
         }
-        .font(.system(size: fontSize(for: size)))
-        .foregroundColor(viewModel.theme.cardFaceDownColor)
     }
 
     // MARK: - Drawing Constants
