@@ -15,12 +15,16 @@ struct EmojiMemoryGameView: View {
         GeometryReader { geometry in
             VStack {
                 Button(NSLocalizedString("new Game", comment: "To start a new game")) {
-                    self.viewModel.newGame()
+                    withAnimation(.easeInOut) {
+                        self.viewModel.newGame()
+                    }
                 }.font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.newGameFontFactor)))
 
                 Grid(self.viewModel.cards) { card in
                     CardView(card: card).onTapGesture {
-                        self.viewModel.choose(card: card)
+                        withAnimation(.linear(duration: 0.5)) {
+                            self.viewModel.choose(card: card)
+                        }
                     }
 
                     .padding(5)

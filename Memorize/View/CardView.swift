@@ -33,6 +33,7 @@ struct CardView: View {
             .cardify(isFaceUp: card.isFaceUp)
             .font(.system(size: fontSize(for: size)))
             .foregroundColor(viewModel.theme.cardFaceDownColor)
+            .transition(.scale)
         }
     }
 
