@@ -1,0 +1,10 @@
+/*
+  Localizable.strings
+  Memorize
+
+  Created by 叶絮雷 on 2020/6/18.
+  Copyright © 2020 KyleYe. All rights reserved.
+*/
+"new Game" = "新游戏";
+"score" = "分数";
+"theme" = "主题";

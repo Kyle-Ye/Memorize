@@ -14,7 +14,7 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Button("New Game") {
+                Button(NSLocalizedString("new Game", comment: "To start a new game")) {
                     self.viewModel.newGame()
                 }.font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.newGameFontFactor)))
 
@@ -27,11 +27,11 @@ struct EmojiMemoryGameView: View {
                 }
                 .padding()
                 HStack {
-                    Text("score: \(self.viewModel.score)")
+                    Text("\(NSLocalizedString("score", comment: "The score of the game")):  \(self.viewModel.score)")
                         .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
                         .padding(.leading)
                     Spacer()
-                    Text("Theme: \(self.viewModel.theme.name)")
+                    Text("\(NSLocalizedString("theme", comment: "The theme name of the game")):  \(self.viewModel.theme.name)")
                         .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
                         .padding(.trailing)
                 }
