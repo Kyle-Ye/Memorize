@@ -17,7 +17,9 @@ class EmojiMemoryGame: ObservableObject {
         .init(name: "Halloween", contents: ["👻", "🎃", "🕷"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
         .init(name: "Faces", contents: ["😀", "😃", "😄", "😁", "😆"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
         .init(name: "Animals", contents: ["🐶","🐱","🐭","🐹","🐰","🙊"],  cardFaceDownColor: .pink, cardFaceUpColor: .blue),
-        .init(name: "Fruit", contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .red)]
+        .init(name: "Fruit", contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .red),
+        .init(name:"Sports", contents: ["⚽️","🏀","🏈","⚾️","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓"], cardFaceDownColor: .blue, cardFaceUpColor: .white),
+        .init(name: "Music", contents: ["🎹","🥁","🎼","🎷","🎻","🪕","🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .yellow)]
 
     static func createMemoryGame() -> EmojiGame {
         let theme = themes.randomElement()!
