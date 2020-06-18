@@ -14,11 +14,10 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Button(NSLocalizedString("new Game", comment: "To start a new game")) {
-                    withAnimation(.easeInOut) {
-                        self.viewModel.newGame()
-                    }
-                }.font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.newGameFontFactor)))
+                Text("\("theme".getLocalized()):  \(self.viewModel.theme.name)")
+                    .bold()
+                    .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
+                    .padding(.leading)
 
                 Grid(self.viewModel.cards) { card in
                     CardView(card: card).onTapGesture {
@@ -26,21 +25,20 @@ struct EmojiMemoryGameView: View {
                             self.viewModel.choose(card: card)
                         }
                     }
-
                     .padding(5)
                 }
                 .padding()
-                HStack {
-                    Text("\("score".getLocalized()):  \(self.viewModel.score)")
-                        .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
-                        .padding(.leading)
-                    Spacer()
-                    Text("\("theme".getLocalized()):  \(self.viewModel.theme.name)")
-                        .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
-                        .padding(.trailing)
-                }
+
+                Text("\("score".getLocalized()):  \(self.viewModel.score)")
+                    .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
+                    .foregroundColor(self.viewModel.theme.cardFaceDownColor)
             }
         }
+        .navigationBarItems(trailing: Button(NSLocalizedString("new Game", comment: "To start a new game")) {
+            withAnimation(.easeInOut) {
+                self.viewModel.newGame()
+            }
+        })
     }
 
     // MARK: - Drawing Constants
