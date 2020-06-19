@@ -22,12 +22,12 @@ class EmojiMemoryGame: ObservableObject {
     }
 
     private(set) static var themes: [EmojiTheme] = [
-        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
-        .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
-        .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊"], cardFaceDownColor: .purple, cardFaceUpColor: .blue),
-        .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .red),
-        .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], cardFaceDownColor: .green, cardFaceUpColor: .blue),
-        .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .yellow)]
+        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷","☠️","🙀","😱"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
+        .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆","😮","😶"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
+        .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊","🐷","🐔"], cardFaceDownColor: .purple, cardFaceUpColor: .gray),
+        .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .white),
+        .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], cardFaceDownColor: .green, cardFaceUpColor: .white),
+        .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .gray)]
 
     private static func createMemoryGame() -> EmojiGame {
         let theme = themes.randomElement()!
