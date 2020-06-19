@@ -9,8 +9,18 @@
 // View
 import SwiftUI
 
+struct scoreData: Identifiable {
+    var id: Int {
+        index
+    }
+
+    var content: Int
+    var index: Int
+}
+
 struct EmojiMemoryGameView: View {
     @EnvironmentObject var viewModel: EmojiMemoryGame
+    @State private var scoreDatas = [scoreData]()
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -22,16 +32,33 @@ struct EmojiMemoryGameView: View {
                         geometry.size.width / 2
                     })
 
-                Grid(self.viewModel.cards) { card in
-                    CardView(card: card).onTapGesture {
-                        withAnimation(.linear(duration: 0.75)) {
-                            self.viewModel.choose(card: card)
+                GeometryReader { geometry in
+                    ZStack {
+                        Grid(self.viewModel.cards) { card in
+                            CardView(card: card).onTapGesture {
+                                withAnimation(.linear(duration: 0.75)) {
+                                    let old = self.viewModel.score
+                                    self.viewModel.choose(card: card)
+                                    let new = self.viewModel.score
+                                    if new != old {
+                                        self.scoreDatas.append(scoreData(content: new - old, index: self.viewModel.cards.firstIndex(matching: card)!))
+                                    }
+                                }
+                            }
+                            .padding(5)
+                        }
+                        .padding()
+                        ForEach(self.scoreDatas) { scoreData in
+                            ScoreView(score: scoreData.content)
+                                .position(GridLayout(itemCount: self.viewModel.cards.count, in: geometry.size).location(ofItemAt: scoreData.index))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        self.scoreDatas.remove(at: self.scoreDatas.firstIndex(matching: scoreData)!)
+                                    }
+                                }
                         }
                     }
-                    .padding(5)
                 }
-                .padding()
-
                 Text("\("score".getLocalized()):  \(self.viewModel.score)")
                     .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
                     .foregroundColor(self.viewModel.theme.cardFaceDownColor)
