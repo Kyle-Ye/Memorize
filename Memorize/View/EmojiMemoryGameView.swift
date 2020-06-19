@@ -17,11 +17,14 @@ struct EmojiMemoryGameView: View {
                 Text("\("theme".getLocalized()):  \(self.viewModel.theme.name)")
                     .bold()
                     .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.themeFontFactor)))
-                    .padding(.leading)
+                    .padding(Edge.Set.leading)
+                    .alignmentGuide(HorizontalAlignment.center, computeValue: { _ in
+                        geometry.size.width / 2
+                    })
 
                 Grid(self.viewModel.cards) { card in
                     CardView(card: card).onTapGesture {
-                        withAnimation(.linear(duration: 0.5)) {
+                        withAnimation(.linear(duration: 0.75)) {
                             self.viewModel.choose(card: card)
                         }
                     }
