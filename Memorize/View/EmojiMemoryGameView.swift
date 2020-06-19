@@ -38,7 +38,7 @@ struct EmojiMemoryGameView: View {
                         }
                         .padding(5)
                     }
-                    .padding()
+
                     ForEach(self.scoreDatas) { scoreData in
                         ScoreView(score: scoreData.content)
                             .position(GridLayout(itemCount: self.viewModel.cards.count, in: geometry.size).location(ofItemAt: scoreData.index))
@@ -64,7 +64,7 @@ struct EmojiMemoryGameView: View {
 
     // MARK: - Drawing Constants
 
-    let scoreFontFactor: CGFloat = 0.1
+    let scoreFontFactor: CGFloat = 0.05
     func fontSize(for size: CGSize, fontScaleFactor: CGFloat) -> CGFloat {
         min(size.width, size.width) * fontScaleFactor
     }
