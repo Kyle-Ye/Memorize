@@ -13,34 +13,30 @@ import SwiftUI
 class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<Emoji>
 
-    init() {
-        model = EmojiMemoryGame.createMemoryGame()
-    }
-
-    init(theme: EmojiTheme) {
+    init(theme: EmojiTheme? = nil) {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
 
     private(set) static var themes: [EmojiTheme] = [
-        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷","☠️","🙀","😱"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
-        .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆","😮","😶"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
-        .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊","🐷","🐔"], cardFaceDownColor: .purple, cardFaceUpColor: .gray),
+        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], cardFaceDownColor: .orange, cardFaceUpColor: .white),
+        .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆", "😮", "😶"], cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
+        .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊", "🐷", "🐔"], cardFaceDownColor: .purple, cardFaceUpColor: .gray),
         .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], cardFaceDownColor: .blue, cardFaceUpColor: .white),
         .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], cardFaceDownColor: .green, cardFaceUpColor: .white),
         .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], cardFaceDownColor: .pink, cardFaceUpColor: .gray)]
 
-    private static func createMemoryGame() -> EmojiGame {
-        let theme = themes.randomElement()!
-        let contents = theme.contents.shuffled()
-        return MemoryGame<String>(theme: theme) { pairIndex in
-            contents[pairIndex]
-        }
-    }
-
-    private static func createMemoryGame(theme: EmojiTheme) -> EmojiGame {
-        let contents = theme.contents.shuffled()
-        return MemoryGame<String>(theme: theme) { pairIndex in
-            contents[pairIndex]
+    private static func createMemoryGame(theme: EmojiTheme? = nil) -> EmojiGame {
+        if let theme = theme {
+            let contents = theme.contents.shuffled()
+            return MemoryGame<String>(theme: theme) { pairIndex in
+                contents[pairIndex]
+            }
+        } else {
+            let theme = themes.randomElement()!
+            let contents = theme.contents.shuffled()
+            return MemoryGame<String>(theme: theme) { pairIndex in
+                contents[pairIndex]
+            }
         }
     }
 
@@ -65,7 +61,11 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card: card)
     }
 
-    func newGame() {
+    func randomGame() {
+        model = EmojiMemoryGame.createMemoryGame()
+    }
+
+    func resetGame() {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
 }

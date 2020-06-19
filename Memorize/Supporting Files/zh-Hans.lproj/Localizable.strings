@@ -5,9 +5,12 @@
   Created by 叶絮雷 on 2020/6/18.
   Copyright © 2020 KyleYe. All rights reserved.
 */
-"new Game" = "重置游戏";
-"score" = "分数";
-"theme" = "主题";
+"Reset game" = "重置游戏";
+"Game over" = "游戏结束";
+"Score" = "分数";
+"Theme" = "主题";
+"Random" = "随机游戏";
+"Your score is" = "您的分数是";
 
 "Themes" = "主题集";
 "Halloween" = "万圣节";
