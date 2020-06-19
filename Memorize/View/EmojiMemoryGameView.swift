@@ -21,6 +21,7 @@ struct scoreData: Identifiable {
 struct EmojiMemoryGameView: View {
     @EnvironmentObject var viewModel: EmojiMemoryGame
     @State private var scoreDatas = [scoreData]()
+    @State private var showAlert = false
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -33,6 +34,9 @@ struct EmojiMemoryGameView: View {
                                 let new = self.viewModel.score
                                 if new != old {
                                     self.scoreDatas.append(scoreData(content: new - old, index: self.viewModel.cards.firstIndex(matching: card)!))
+                                }
+                                if self.viewModel.cards.filter({ !$0.isMatched }).isEmpty {
+                                    self.showAlert = true
                                 }
                             }
                         }
@@ -60,6 +64,12 @@ struct EmojiMemoryGameView: View {
             }
         })
         .navigationBarTitle(self.viewModel.theme.name)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Game Over"), message: Text("Your score is \(self.viewModel.score)"),
+                  dismissButton: .default(Text("new Game"), action: {
+                      self.viewModel.newGame()
+            }))
+        }
     }
 
     // MARK: - Drawing Constants

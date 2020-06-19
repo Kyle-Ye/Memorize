@@ -40,6 +40,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
 
+    var isLastCard: Bool {
+        cards.filter {
+            !$0.isMatched
+        }.isEmpty
+    }
+
     mutating func choose(card: Card) {
         print("card chosen: \(card)")
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
@@ -57,6 +63,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                         score += bonusScore
                     } else {
                         score += successScore
+                    }
+                    if isLastCard {
+                        indexOfTheOneAndOnlyFaceUpCard = nil
                     }
                 } else {
                     if seenCards.contains(potentialMatchIndex) {
