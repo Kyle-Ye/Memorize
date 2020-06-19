@@ -65,6 +65,7 @@
 		27E2DBC4249D08B200F57452 /* fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fail.wav; sourceTree = "<group>"; };
 		27E2DBC7249D0A2100F57452 /* bonus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bonus.wav; sourceTree = "<group>"; };
 		27E2DBC8249D0A2100F57452 /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
+		27E2DBCB249D0EFF00F57452 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 		271822332498706A0017725F = {
 			isa = PBXGroup;
 			children = (
+				27E2DBCB249D0EFF00F57452 /* README.md */,
 				2718223E2498706A0017725F /* Memorize */,
 				2718223D2498706A0017725F /* Products */,
 			);
