@@ -58,7 +58,7 @@ struct EmojiMemoryGameView: View {
                     .foregroundColor(self.game.theme.cardFaceDownColor)
             }
         }
-        .navigationBarItems(trailing: Button("Reset game".getLocalized()) {
+        .navigationBarItems(trailing: Button("Reset".getLocalized()) {
             withAnimation(.easeInOut) {
                 self.game.resetGame()
             }
@@ -66,7 +66,7 @@ struct EmojiMemoryGameView: View {
         .navigationBarTitle(self.game.theme.name)
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Game Over".getLocalized()), message: Text("\("Your score is".getLocalized()) \(self.game.score)"),
-                  dismissButton: .default(Text("Reset game".getLocalized()), action: {
+                  dismissButton: .default(Text("Reset".getLocalized()), action: {
                       self.game.resetGame()
             }))
         }

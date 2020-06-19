@@ -5,8 +5,8 @@
   Created by 叶絮雷 on 2020/6/18.
   Copyright © 2020 KyleYe. All rights reserved.
 */
-"Reset game" = "Reset game";
-"Game over" = "Game over";
+"Reset" = "Reset";
+"Game Over" = "Game over";
 "Score" = "Score";
 "Theme" = "Theme";
 "Random" = "Random";
