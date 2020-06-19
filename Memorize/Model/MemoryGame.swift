@@ -46,8 +46,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }.isEmpty
     }
 
-    mutating func choose(card: Card) {
+    mutating func choose(card: Card) -> Result? {
         print("card chosen: \(card)")
+        var result: Result?
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
             if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
                 cards[chosenIndex].isFaceUp = true
@@ -56,13 +57,21 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[potentialMatchIndex].isMatched = true
                     if cards[chosenIndex].hasEarnedBonus {
                         score += bonusScore
+                        result = .bonus
                     } else {
                         score += successScore
+                        if result == nil {
+                            result = .success
+                        }
                     }
                     if cards[potentialMatchIndex].hasEarnedBonus {
                         score += bonusScore
+                        result = .bonus
                     } else {
                         score += successScore
+                        if result == nil {
+                            result = .success
+                        }
                     }
                     if isLastCard {
                         indexOfTheOneAndOnlyFaceUpCard = nil
@@ -70,9 +79,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 } else {
                     if seenCards.contains(potentialMatchIndex) {
                         score += failScore
+                        result = .fail
                     }
                     if seenCards.contains(chosenIndex) {
                         score += failScore
+                        result = .fail
                     }
                 }
                 seenCards.insert(chosenIndex)
@@ -81,6 +92,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
         }
+        return result
     }
 
     struct Card: Identifiable {

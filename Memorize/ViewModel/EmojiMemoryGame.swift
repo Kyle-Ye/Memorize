@@ -7,7 +7,7 @@
 //
 
 // ViewModel
-import Foundation
+import AVFoundation
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
@@ -58,7 +58,12 @@ class EmojiMemoryGame: ObservableObject {
 
     func choose(card: EmojiCard) {
         objectWillChange.send()
-        model.choose(card: card)
+        switch model.choose(card: card) {
+        case .bonus: EmojiMemoryGame.playBonus()
+        case .success: EmojiMemoryGame.playSuccess()
+        case .fail: EmojiMemoryGame.playFail()
+        case .none: break
+        }
     }
 
     func randomGame() {
@@ -67,6 +72,35 @@ class EmojiMemoryGame: ObservableObject {
 
     func resetGame() {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
+
+    private static var audioPlayer = AVAudioPlayer()
+
+    private static func playSound(soundPath: String?) {
+        if let path = soundPath {
+            let soundUrl = URL(fileURLWithPath: path)
+            do {
+                try audioPlayer = AVAudioPlayer(contentsOf: soundUrl)
+                audioPlayer.play()
+            } catch {
+                print("Audio play error for \(path)")
+            }
+        }
+    }
+
+    private static let bonusSoundPath = Bundle.main.path(forResource: "bonus", ofType: ".wav")
+    private static let successSoundPath = Bundle.main.path(forResource: "success", ofType: ".wav")
+    private static let failSoundPath = Bundle.main.path(forResource: "fail", ofType: ".wav")
+    static func playBonus() {
+        playSound(soundPath: bonusSoundPath)
+    }
+
+    static func playSuccess() {
+        playSound(soundPath: successSoundPath)
+    }
+
+    static func playFail() {
+        playSound(soundPath: failSoundPath)
     }
 }
 
