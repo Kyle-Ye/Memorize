@@ -9,18 +9,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showingAddTheme = false
+
     var body: some View {
         NavigationView {
-            List {
-                ForEach(EmojiMemoryGame.themes, id: \.name) { theme in
-                    NavigationLink(destination: EmojiMemoryGameView()
-                        .environmentObject(EmojiMemoryGame(theme: theme))
-                    ) {
-                        ThemeView(theme: theme)
+            ZStack(alignment: .bottomTrailing) {
+                List {
+                    ForEach(EmojiMemoryGame.themes, id: \.name) { theme in
+                        NavigationLink(destination: EmojiMemoryGameView()
+                            .environmentObject(EmojiMemoryGame(theme: theme))
+                        ) {
+                            ThemeView(theme: theme)
+                        }
                     }
                 }
+                RoundButton(isOn: $showingAddTheme)
+                    .padding()
             }
             .navigationBarTitle("Themes".getLocalized())
+        }
+        .sheet(isPresented: $showingAddTheme) {
+            NewThemeView()
         }
     }
 }
