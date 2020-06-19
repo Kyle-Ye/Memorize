@@ -22,8 +22,8 @@ struct Dropfy: AnimatableModifier {
         }
     }
 
-    init(showAnimation: Bool) {
-        height = showAnimation ? 180 : 0
+    init(showAnimation: Bool, isUp: Bool) {
+        height = showAnimation ? (isUp ? -180 : 180) : 0
         opacity = showAnimation ? 0 : 1
     }
 
@@ -35,7 +35,7 @@ struct Dropfy: AnimatableModifier {
 }
 
 extension View {
-    func dropfy(showAnimation: Bool) -> some View {
-        modifier(Dropfy(showAnimation: showAnimation))
+    func dropfy(showAnimation: Bool, isUp: Bool) -> some View {
+        modifier(Dropfy(showAnimation: showAnimation, isUp: isUp))
     }
 }

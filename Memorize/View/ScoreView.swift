@@ -22,7 +22,7 @@ struct ScoreView: View {
                         self.showScoreAnimation = true
                     }
                 }
-                .dropfy(showAnimation: showScoreAnimation)
+                .dropfy(showAnimation: showScoreAnimation, isUp: score > 0)
                 .foregroundColor(score.getColor())
         }
     }
