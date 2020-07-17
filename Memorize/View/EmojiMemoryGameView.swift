@@ -55,7 +55,7 @@ struct EmojiMemoryGameView: View {
                 }
                 Text("\("Score".getLocalized()):  \(self.game.score)")
                     .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
-                    .foregroundColor(self.game.theme.cardFaceDownColor)
+                    .foregroundColor(Color(self.game.theme.cardFaceDownColor))
             }
         }
         .navigationBarItems(trailing: Button("Reset".getLocalized()) {

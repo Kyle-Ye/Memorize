@@ -10,7 +10,7 @@
 import Foundation
 import SwiftUI
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable {
     private(set) var cards: [Card]
     private(set) var theme: Theme
     private(set) var score = 0
@@ -22,8 +22,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     init(theme: Theme, cardContentFactory: (Int) -> CardContent) {
         self.theme = theme
         cards = [Card]()
-        let numberOfPairsOfCards = theme.pairs ?? Int.random(in: 2 ... theme.contents.count)
-        for pairIndex in 0 ..< numberOfPairsOfCards {
+        for pairIndex in 0 ..< theme.pairs {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(id: pairIndex * 2, content: content))
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
@@ -159,11 +158,31 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
 
-    struct Theme {
+    struct Theme: Hashable,Codable {
+        internal init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: UIColor.RGB, cardFaceUpColor: UIColor.RGB) {
+            self.name = name
+            self.contents = contents
+            self.pairs = pairs
+            self.cardFaceDownColor = cardFaceDownColor
+            self.cardFaceUpColor = cardFaceUpColor
+        }
+
+        init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: Color, cardFaceUpColor: Color) {
+            self.name = name
+            self.contents = contents
+            self.pairs = pairs
+            self.cardFaceDownColor = UIColor(cardFaceDownColor).rgb
+            self.cardFaceUpColor = UIColor(cardFaceUpColor).rgb
+        }
+
         var name: String
         var contents: [CardContent]
-        var pairs: Int?
-        var cardFaceDownColor: Color
-        var cardFaceUpColor: Color
+        var pairs: Int
+        var cardFaceDownColor: UIColor.RGB
+        var cardFaceUpColor: UIColor.RGB
+
+        var json: Data? {
+            try? JSONEncoder().encode(self)
+        }
     }
 }

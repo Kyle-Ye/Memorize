@@ -16,10 +16,12 @@ struct ContentView: View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(EmojiMemoryGame.themes, id: \.name) { theme in
+                    ForEach(EmojiMemoryGame.themes, id: \.self) { theme in
                         NavigationLink(destination: EmojiMemoryGameView()
-                            .environmentObject(EmojiMemoryGame(theme: theme)
-                            )
+                            .environmentObject(EmojiMemoryGame(theme: theme))
+                            .onAppear {
+                                print("json = \(theme.json?.utf8 ?? "nil")")
+                            }
                         ) {
                             ThemeView(theme: theme)
                         }

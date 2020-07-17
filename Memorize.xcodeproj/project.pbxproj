@@ -19,6 +19,8 @@
 		27196D52249A54500063B7CD /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27196D4F249A54500063B7CD /* Array+Identifiable.swift */; };
 		27196D55249A54630063B7CD /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27196D53249A54630063B7CD /* Grid.swift */; };
 		27196D56249A54630063B7CD /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27196D54249A54630063B7CD /* EmojiMemoryGameView.swift */; };
+		2747D11A24C19AFF00B09D89 /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2747D11924C19AFF00B09D89 /* UIColor+RGBA.swift */; };
+		2747D11C24C1A0D200B09D89 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2747D11B24C1A0D200B09D89 /* Data+String.swift */; };
 		274C03662498CB0000C2ED7E /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C03652498CB0000C2ED7E /* MemoryGame.swift */; };
 		274C03682498CC0D00C2ED7E /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C03672498CC0D00C2ED7E /* EmojiMemoryGame.swift */; };
 		274C036E2499139300C2ED7E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C036D2499139300C2ED7E /* CardView.swift */; };
@@ -50,6 +52,8 @@
 		27196D4F249A54500063B7CD /* Array+Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
 		27196D53249A54630063B7CD /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		27196D54249A54630063B7CD /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
+		2747D11924C19AFF00B09D89 /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
+		2747D11B24C1A0D200B09D89 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
 		274C03652498CB0000C2ED7E /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		274C03672498CC0D00C2ED7E /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 		274C036D2499139300C2ED7E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				27196D4E249A54500063B7CD /* Array+Only.swift */,
 				27196D4F249A54500063B7CD /* Array+Identifiable.swift */,
 				2761B9BD249BC9CC00514EC7 /* String+Localizable.swift */,
+				2747D11924C19AFF00B09D89 /* UIColor+RGBA.swift */,
+				2747D11B24C1A0D200B09D89 /* Data+String.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -285,11 +291,13 @@
 				2761B9BC249BC29900514EC7 /* ContentView.swift in Sources */,
 				27E2DBC3249D06F900F57452 /* Result.swift in Sources */,
 				271822422498706A0017725F /* SceneDelegate.swift in Sources */,
+				2747D11A24C19AFF00B09D89 /* UIColor+RGBA.swift in Sources */,
 				2761B9BA249BBFF800514EC7 /* ThemeView.swift in Sources */,
 				274C03662498CB0000C2ED7E /* MemoryGame.swift in Sources */,
 				27196D55249A54630063B7CD /* Grid.swift in Sources */,
 				274C036E2499139300C2ED7E /* CardView.swift in Sources */,
 				271451D9249CED4D00081975 /* NewThemeView.swift in Sources */,
+				2747D11C24C1A0D200B09D89 /* Data+String.swift in Sources */,
 				27A3EE03249B519700BB64B7 /* Cardify.swift in Sources */,
 				27196D52249A54500063B7CD /* Array+Identifiable.swift in Sources */,
 				27196D50249A54500063B7CD /* GridLayout.swift in Sources */,
@@ -366,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -421,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

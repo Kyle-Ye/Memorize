@@ -15,7 +15,7 @@ struct ThemeView: View {
             Text(theme.name)
                 .bold()
                 .font(.title)
-                .foregroundColor(theme.cardFaceDownColor)
+                .foregroundColor(Color(theme.cardFaceDownColor))
             Text(theme.contents.joined())
         }
     }
