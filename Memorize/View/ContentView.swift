@@ -25,6 +25,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                .listStyle(PlainListStyle())
                 .background(
                     Group {
                         if isRandomGame {
