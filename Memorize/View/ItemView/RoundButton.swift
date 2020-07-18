@@ -12,7 +12,7 @@ struct RoundButton: View {
     @Binding var isOn: Bool
     var body: some View {
         Button(action: {
-            self.isOn.toggle()
+            isOn.toggle()
         }, label: {
             Text("+").font(.system(.largeTitle))
                 .frame(width: 77, height: 70)

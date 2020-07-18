@@ -18,13 +18,13 @@ struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            self.body(for: GridLayout(itemCount: self.items.count, in: geometry.size))
+            body(for: GridLayout(itemCount: items.count, in: geometry.size))
         }
     }
 
     private func body(for layout: GridLayout) -> some View {
         ForEach(items) { item in
-            self.body(for: item, in: layout)
+            body(for: item, in: layout)
         }
     }
 

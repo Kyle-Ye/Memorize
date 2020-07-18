@@ -41,7 +41,7 @@ struct ContentView: View {
             }
             .navigationBarTitle("Themes".getLocalized())
             .navigationBarItems(trailing: Button("Random".getLocalized()) {
-                self.isRandomGame = true
+                isRandomGame = true
             })
         }
         .sheet(isPresented: $showingAddTheme) {

@@ -19,7 +19,7 @@ struct ScoreView: View {
                 .transition(.identity)
                 .onAppear {
                     withAnimation(Animation.linear(duration: 1)) {
-                        self.showScoreAnimation = true
+                        showScoreAnimation = true
                     }
                 }
                 .dropfy(showAnimation: showScoreAnimation, isUp: score > 0)

@@ -26,48 +26,48 @@ struct EmojiMemoryGameView: View {
         GeometryReader { geometry in
             VStack {
                 ZStack {
-                    Grid(self.game.cards) { card in
+                    Grid(game.cards) { card in
                         CardView(card: card).onTapGesture {
                             withAnimation(.linear(duration: 0.75)) {
-                                let old = self.game.score
-                                self.game.choose(card: card)
-                                let new = self.game.score
+                                let old = game.score
+                                game.choose(card: card)
+                                let new = game.score
                                 if new != old {
-                                    self.scoreDatas.append(scoreData(content: new - old, index: self.game.cards.firstIndex(matching: card)!))
+                                    scoreDatas.append(scoreData(content: new - old, index: game.cards.firstIndex(matching: card)!))
                                 }
-                                if self.game.cards.filter({ !$0.isMatched }).isEmpty {
-                                    self.showAlert = true
+                                if game.cards.filter({ !$0.isMatched }).isEmpty {
+                                    showAlert = true
                                 }
                             }
                         }
                         .padding(5)
                     }
 
-                    ForEach(self.scoreDatas) { scoreData in
+                    ForEach(scoreDatas) { scoreData in
                         ScoreView(score: scoreData.content)
-                            .position(GridLayout(itemCount: self.game.cards.count, in: geometry.size).location(ofItemAt: scoreData.index))
+                            .position(GridLayout(itemCount: game.cards.count, in: geometry.size).location(ofItemAt: scoreData.index))
                             .onAppear {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    self.scoreDatas.remove(at: self.scoreDatas.firstIndex(matching: scoreData)!)
+                                    scoreDatas.remove(at: scoreDatas.firstIndex(matching: scoreData)!)
                                 }
                             }
                     }
                 }
-                Text("\("Score".getLocalized()):  \(self.game.score)")
-                    .font(.system(size: self.fontSize(for: geometry.size, fontScaleFactor: self.scoreFontFactor)))
-                    .foregroundColor(Color(self.game.theme.cardFaceDownColor))
+                Text("\("Score".getLocalized()):  \(game.score)")
+                    .font(.system(size: fontSize(for: geometry.size, fontScaleFactor: scoreFontFactor)))
+                    .foregroundColor(Color(game.theme.cardFaceDownColor))
             }
         }
         .navigationBarItems(trailing: Button("Reset".getLocalized()) {
             withAnimation(.easeInOut) {
-                self.game.resetGame()
+                game.resetGame()
             }
         })
-        .navigationBarTitle(self.game.theme.name)
+        .navigationBarTitle(game.theme.name)
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Game Over".getLocalized()), message: Text("\("Your score is".getLocalized()) \(self.game.score)"),
+            Alert(title: Text("Game Over".getLocalized()), message: Text("\("Your score is".getLocalized()) \(game.score)"),
                   dismissButton: .default(Text("Reset".getLocalized()), action: {
-                      self.game.resetGame()
+                      game.resetGame()
             }))
         }
     }
