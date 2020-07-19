@@ -40,7 +40,6 @@ struct ThemeEditor: View {
             Divider()
             Form {
                 ThemeNameSection(theme: $theme)
-                AddEmojisSection(theme: $theme)
                 EmojisSection(theme: $theme)
                 CardCountSection(theme: $theme)
                 FaceDownColorChooserSection(theme: $theme)
@@ -54,13 +53,10 @@ struct ThemeEditor: View {
     struct ThemeNameSection: View {
         @Binding var theme: Theme
         var body: some View {
-            Section(header: ThemeNameHint(name: theme.name).textCase(nil)) {
+            Section(header: ThemeNameHint(name: theme.name)) {
                 HStack {
                     TextField("Theme Name", text: $theme.name)
                     Spacer()
-                    if !theme.name.isEmpty {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                    }
                 }
             }
         }
@@ -72,39 +68,33 @@ struct ThemeEditor: View {
             }
 
             var body: some View {
-                if name.isEmpty {
-                    Text(message)
-                        .foregroundColor(.red)
-                }
-            }
-        }
-    }
-
-    struct AddEmojisSection: View {
-        @Binding var theme: Theme
-        @State var addEmojis = ""
-        var body: some View {
-            Section(header: Text("Add Emoji").bold().font(.headline).textCase(nil)) {
                 HStack {
-                    TextField("Emoji", text: $addEmojis)
-                    Button("Add") {
-                        theme.addContents(addEmojis.map { String($0) })
-                        addEmojis = ""
+                    Text("Theme Name").bold().font(.headline)
+                    if name.isEmpty {
+                        Text(message)
+                            .foregroundColor(.red)
+                    } else {
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
                     }
                 }
+                .textCase(nil)
             }
         }
     }
 
     struct EmojisSection: View {
         @Binding var theme: Theme
+        @State var addEmojis = ""
+
         var body: some View {
-            Section(header: HStack {
-                Text("Emojis").bold().font(.headline)
-                EmojiHint(emojisCount: theme.contents.count)
-                Spacer()
-                Text("tap emoji to exclude")
-            }.textCase(nil)) {
+            Section(header: EmojiHint(emojisCount: theme.contents.count)) {
+                HStack {
+                    TextField("Add Emojis", text: $addEmojis)
+                    Button("Add") {
+                        theme.addContents(addEmojis.map { String($0) })
+                        addEmojis = ""
+                    }
+                }
                 Grid(theme.contents, id: \.self) { emoji in
                     Text(emoji).font(.system(size: fontSize))
                         .onTapGesture {
@@ -128,10 +118,20 @@ struct ThemeEditor: View {
             }
 
             var body: some View {
-                if emojisCount < 2 {
-                    Text(message1)
-                        .foregroundColor(.red)
+                HStack {
+                    Text("Emojis").bold().font(.headline)
+                    if emojisCount < 2 {
+                        Text(message1)
+                            .foregroundColor(.red)
+                    } else {
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                    }
+                    Spacer()
+                    if emojisCount >= 2 {
+                        Text("tap emoji to exclude")
+                    }
                 }
+                .textCase(nil)
             }
         }
     }
@@ -139,20 +139,13 @@ struct ThemeEditor: View {
     struct CardCountSection: View {
         @Binding var theme: Theme
         var body: some View {
-            Section(header: HStack {
-                Text("Card Count").bold().font(.headline)
-                CardCountHint(emojisCount: theme.contents.count, pairs: theme.pairs)
-            }.textCase(nil)) {
+            Section(header: CardCountHint(emojisCount: theme.contents.count, pairs: theme.pairs)) {
                 HStack {
                     Stepper(
                         "\(theme.pairs) Pairs",
                         onIncrement: { theme.increasePairs() },
                         onDecrement: { theme.decresePairs() }
                     )
-                    Spacer()
-                    if theme.pairs >= 2 && theme.contents.count >= 2 {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                    }
                 }
             }
         }
@@ -165,10 +158,22 @@ struct ThemeEditor: View {
             }
 
             var body: some View {
-                if emojisCount >= 2 && pairs < 2 {
-                    Text(message)
-                        .foregroundColor(.red)
+                HStack {
+                    Text("Card Count").bold().font(.headline)
+                    if emojisCount >= 2 && pairs < 2 {
+                        Text(message)
+                            .foregroundColor(.red)
+                    } else if emojisCount >= 2 {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .imageScale(.large)
+                    }
+                    Spacer()
+                    if pairs >= 2 {
+                        Text("range 2 ~ \(emojisCount)")
+                    }
                 }
+                .textCase(nil)
             }
         }
     }
@@ -176,7 +181,10 @@ struct ThemeEditor: View {
     struct FaceDownColorChooserSection: View {
         @Binding var theme: Theme
         var body: some View {
-            Section(header: Text("Face Down Color").bold().font(.headline).textCase(nil)) {
+            Section(header: HStack {
+                Text("Face Down Color").bold().font(.headline).textCase(nil)
+                Image(systemName: "checkmark.circle.fill").foregroundColor(Color(theme.cardFaceDownColor))
+            }) {
                 ColorChooserSection(themeColor: $theme.cardFaceDownColor)
             }
         }
@@ -185,7 +193,10 @@ struct ThemeEditor: View {
     struct FaceUpColorChooserSection: View {
         @Binding var theme: Theme
         var body: some View {
-            Section(header: Text("Face Up Color").bold().font(.headline).textCase(nil)) {
+            Section(header: HStack {
+                Text("Face Up Color").bold().font(.headline).textCase(nil)
+                Image(systemName: "checkmark.circle.fill").foregroundColor(Color(theme.cardFaceUpColor))
+            }) {
                 ColorChooserSection(themeColor: $theme.cardFaceUpColor)
             }
         }
