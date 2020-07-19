@@ -29,7 +29,7 @@ struct ThemeView: View {
                     .onTapGesture {
                         editingTheme = true
                     }
-                    .popover(isPresented: $editingTheme) {
+                    .sheet(isPresented: $editingTheme) {
                         ThemeEditor(theme: theme)
                             .environmentObject(store)
                     }

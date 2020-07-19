@@ -216,4 +216,8 @@ extension MemoryGame.Theme {
             pairs = 2
         }
     }
+
+    mutating func addContents(_ contents: [CardContent]) {
+        self.contents += contents
+    }
 }

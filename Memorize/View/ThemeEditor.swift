@@ -19,49 +19,73 @@ struct ThemeEditor: View {
     @State private var index = 0
 
     var body: some View {
-        Form {
-            Section {
-                TextField("Theme Name", text: $theme.name)
-            }
-            Section(header: Text("Add Emoji")) {
+        VStack(spacing: 0) {
+            ZStack {
+                Text(theme.name)
+                    .font(.headline)
+                    .padding()
                 HStack {
-                    TextField("Emoji", text: $addEmojis)
-                    Button("Add") {
+                    Spacer()
+                    Button(action: {
+                        store.applyThemeChange(theme)
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Done").padding()
+                    })
+                }
+            }
+            Divider()
+            Form {
+                Section {
+                    TextField("Theme Name", text: $theme.name)
+                }
+                Section(header: Text("Add Emoji")) {
+                    HStack {
+                        TextField("Emoji", text: $addEmojis)
+                        Button("Add") {
+                            theme.addContents(addEmojis.map { String($0) })
+                            addEmojis = ""
+                        }
                     }
                 }
-            }
-            Section(header: Text("Emojis")) {
-                Grid(theme.contents, id: \.self) { emoji in
-                    Text(emoji)
+                Section(header: Text("Emojis")) {
+                    Grid(theme.contents, id: \.self) { emoji in
+                        Text(emoji).font(.system(size: fontSize))
+                            .onTapGesture {
+                                theme.contents.remove(at: theme.contents.firstIndex(of: emoji)!)
+                                theme.pairs = min(theme.pairs, theme.contents.count)
+                            }
+                    }
+                    .frame(height: emojisHeight)
                 }
-            }
-            Section(header: Text("Card Count")) {
-                Stepper("\(theme.pairs) Pairs") {
-                    theme.increasePairs()
-                } onDecrement: {
-                    theme.decresePairs()
+                Section(header: Text("Card Count")) {
+                    Stepper(
+                        "\(theme.pairs) Pairs",
+                        onIncrement: { theme.increasePairs() },
+                        onDecrement: { theme.decresePairs() }
+                    )
                 }
-            }
-            Section {
-                Grid(ThemeEditor.colorSet, id: \.self) { color in
-                    ColorCardChooser(color: color, choose: UIColor(color).rgb == theme.cardFaceDownColor)
-                        .onTapGesture {
-                            theme.cardFaceDownColor = UIColor(color).rgb
-                        }
-                }
-                .frame(height: height)
-            }
-
-            Section {
-                Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                    store.applyThemeChange(theme)
+                Section {
+                    Grid(ThemeEditor.colorSet, id: \.self) { color in
+                        ColorCardChooser(color: color, choose: UIColor(color).rgb == theme.cardFaceDownColor)
+                            .onTapGesture {
+                                theme.cardFaceDownColor = UIColor(color).rgb
+                            }
+                    }
+                    .frame(height: colorHeight)
                 }
             }
         }
     }
 
-    var height: CGFloat {
+    // MARK: - Drawing Constants
+
+    let fontSize: CGFloat = 40
+    var emojisHeight: CGFloat {
+        CGFloat((ThemeEditor.colorSet.count - 1) / 6) * 70 + 70
+    }
+
+    var colorHeight: CGFloat {
         CGFloat((ThemeEditor.colorSet.count - 1) / 6) * 120 + 120
     }
 }

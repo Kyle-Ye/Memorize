@@ -51,7 +51,6 @@ struct EmojiMemoryGameThemeChooser: View {
                 leading: Button(
                     action: {
                         showingAddTheme = true
-//                        store.addDocument()
                     }, label: {
                         Image(systemName: "plus").imageScale(.large)
                     }
