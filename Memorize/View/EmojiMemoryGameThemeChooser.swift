@@ -12,7 +12,20 @@ struct EmojiMemoryGameThemeChooser: View {
     @EnvironmentObject var store: EmojiMemoryThemeStore
     @State private var showingAddTheme = false
     @State private var isRandomGame = false
-    @State private var editMode: EditMode = .inactive
+    @State private var editMode: EditMode = .inactive {
+        didSet {
+            switch editMode.self {
+            case EditMode.inactive:
+                print("1")
+            case EditMode.active:
+                print("2")
+            case EditMode.transient:
+                print("3")
+            @unknown default:
+                print("4")
+            }
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -25,7 +38,7 @@ struct EmojiMemoryGameThemeChooser: View {
                             print("json = \(theme.json?.utf8 ?? "nil")")
                         }
                     ) {
-                        ThemeView(theme: theme, isEditing: editMode.isEditing)
+                        ThemeView(theme: theme, editMode: editMode)
                     }
                 }
                 .onDelete { indexSet in
@@ -69,6 +82,6 @@ struct EmojiMemoryGameThemeChooser: View {
 struct EmojiMemoryGameThemeChooser_Previews: PreviewProvider {
     static var previews: some View {
         EmojiMemoryGameThemeChooser()
-            .environmentObject(EmojiMemoryGame())
+            .environmentObject(EmojiMemoryThemeStore())
     }
 }

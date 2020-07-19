@@ -12,7 +12,7 @@ struct ThemeView: View {
     @EnvironmentObject var store: EmojiMemoryThemeStore
     @State var editingTheme: Bool = false
     var theme: MemoryGame<String>.Theme
-    var isEditing: Bool = false
+    var editMode: EditMode
 
     var description: String {
         if theme.contents.count == theme.pairs {
@@ -24,7 +24,7 @@ struct ThemeView: View {
 
     var body: some View {
         HStack {
-            if isEditing {
+            if editMode == .active {
                 Image(systemName: "pencil.circle.fill").imageScale(.large).foregroundColor(Color(theme.cardFaceDownColor))
                     .onTapGesture {
                         editingTheme = true
@@ -38,7 +38,7 @@ struct ThemeView: View {
                 Text(theme.name)
                     .bold()
                     .font(.title)
-                    .foregroundColor(isEditing ? .primary : Color(theme.cardFaceDownColor))
+                    .foregroundColor(editMode == .active ? .primary : Color(theme.cardFaceDownColor))
                 Text("\(description) \(theme.contents.joined())")
                     .lineLimit(1)
             }
@@ -48,6 +48,6 @@ struct ThemeView: View {
 
 struct ThemeView_Previews: PreviewProvider {
     static var previews: some View {
-        ThemeView(theme: EmojiMemoryGame.themes.randomElement()!, isEditing: true)
+        ThemeView(theme: EmojiMemoryGame.themes.randomElement()!, editMode: .inactive)
     }
 }
