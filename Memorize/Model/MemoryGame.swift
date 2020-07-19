@@ -30,6 +30,54 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
         cards.shuffle()
     }
 
+    struct Card: Identifiable {
+        var id: Int
+        var isFaceUp = false {
+            didSet {
+                if isFaceUp {
+                    startUsingBonusTime()
+                } else {
+                    stopUsingBonusTime()
+                }
+            }
+        }
+
+        var isMatched = false {
+            didSet {
+                if isMatched {
+                    stopUsingBonusTime()
+                }
+            }
+        }
+
+        var content: CardContent
+
+        // MARK: - Bonus Time
+
+        var bonusTimeLimit: TimeInterval = 6
+        var lastFaceUpDate: Date?
+        var pastFaceUpTime: TimeInterval = 0
+    }
+
+    struct Theme: Hashable, Codable, Identifiable {
+        internal init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: UIColor.RGB, cardFaceUpColor: UIColor.RGB) {
+            self.name = name
+            self.contents = contents
+            self.pairs = pairs
+            self.cardFaceDownColor = cardFaceDownColor
+            self.cardFaceUpColor = cardFaceUpColor
+        }
+
+        var id = UUID()
+        var name: String
+        var contents: [CardContent]
+        var pairs: Int
+        var cardFaceDownColor: UIColor.RGB
+        var cardFaceUpColor: UIColor.RGB
+    }
+}
+
+extension MemoryGame {
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp }.only }
         set {
@@ -93,104 +141,79 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
         }
         return result
     }
+}
 
-    struct Card: Identifiable {
-        var id: Int
-        var isFaceUp = false {
-            didSet {
-                if isFaceUp {
-                    startUsingBonusTime()
-                } else {
-                    stopUsingBonusTime()
-                }
-            }
-        }
-
-        var isMatched = false {
-            didSet {
-                if isMatched {
-                    stopUsingBonusTime()
-                }
-            }
-        }
-
-        var content: CardContent
-
-        // MARK: - Bonus Time
-
-        var bonusTimeLimit: TimeInterval = 6
-        var lastFaceUpDate: Date?
-        private var faceUpTime: TimeInterval {
-            if let lastFaceUpDate = lastFaceUpDate {
-                return pastFaceUpTime + Date().timeIntervalSince(lastFaceUpDate)
-            } else {
-                return pastFaceUpTime
-            }
-        }
-
-        var pastFaceUpTime: TimeInterval = 0
-
-        var bonusTimeRemaining: TimeInterval {
-            max(0, bonusTimeLimit - faceUpTime)
-        }
-
-        var bonusRemaining: Double {
-            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining / bonusTimeLimit : 0
-        }
-
-        var hasEarnedBonus: Bool {
-            isMatched && bonusTimeRemaining > 0
-        }
-
-        var isConsumingBonusTime: Bool {
-            isFaceUp && !isMatched && bonusTimeRemaining > 0
-        }
-
-        private mutating func startUsingBonusTime() {
-            if isConsumingBonusTime, lastFaceUpDate == nil {
-                lastFaceUpDate = Date()
-            }
-        }
-
-        private mutating func stopUsingBonusTime() {
-            pastFaceUpTime = faceUpTime
-            lastFaceUpDate = nil
+extension MemoryGame.Card {
+    private var faceUpTime: TimeInterval {
+        if let lastFaceUpDate = lastFaceUpDate {
+            return pastFaceUpTime + Date().timeIntervalSince(lastFaceUpDate)
+        } else {
+            return pastFaceUpTime
         }
     }
 
-    struct Theme: Hashable, Codable {
-        internal init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: UIColor.RGB, cardFaceUpColor: UIColor.RGB) {
-            self.name = name
-            self.contents = contents
-            self.pairs = pairs
-            self.cardFaceDownColor = cardFaceDownColor
-            self.cardFaceUpColor = cardFaceUpColor
+    var bonusTimeRemaining: TimeInterval {
+        max(0, bonusTimeLimit - faceUpTime)
+    }
+
+    var bonusRemaining: Double {
+        (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining / bonusTimeLimit : 0
+    }
+
+    var hasEarnedBonus: Bool {
+        isMatched && bonusTimeRemaining > 0
+    }
+
+    var isConsumingBonusTime: Bool {
+        isFaceUp && !isMatched && bonusTimeRemaining > 0
+    }
+
+    private mutating func startUsingBonusTime() {
+        if isConsumingBonusTime, lastFaceUpDate == nil {
+            lastFaceUpDate = Date()
         }
+    }
 
-        init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: Color, cardFaceUpColor: Color) {
-            self.name = name
-            self.contents = contents
-            self.pairs = pairs
-            self.cardFaceDownColor = UIColor(cardFaceDownColor).rgb
-            self.cardFaceUpColor = UIColor(cardFaceUpColor).rgb
+    private mutating func stopUsingBonusTime() {
+        pastFaceUpTime = faceUpTime
+        lastFaceUpDate = nil
+    }
+}
+
+extension MemoryGame.Theme {
+    var json: Data? {
+        try? JSONEncoder().encode(self)
+    }
+
+    init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: Color, cardFaceUpColor: Color) {
+        self.name = name
+        self.contents = contents
+        self.pairs = pairs
+        self.cardFaceDownColor = UIColor(cardFaceDownColor).rgb
+        self.cardFaceUpColor = UIColor(cardFaceUpColor).rgb
+    }
+
+    init?(json: Data?) {
+        if let json = json, let theme = try? JSONDecoder().decode(MemoryGame.Theme.self, from: json) {
+            self = theme
+        } else {
+            return nil
         }
+    }
 
-        var name: String
-        var contents: [CardContent]
-        var pairs: Int
-        var cardFaceDownColor: UIColor.RGB
-        var cardFaceUpColor: UIColor.RGB
-
-        var json: Data? {
-            try? JSONEncoder().encode(self)
+    mutating func increasePairs() {
+        if pairs < contents.count {
+            pairs += 1
+        } else {
+            pairs = contents.count
         }
+    }
 
-        init?(json: Data?) {
-            if let json = json, let theme = try? JSONDecoder().decode(Theme.self, from: json) {
-                self = theme
-            } else {
-                return nil
-            }
+    mutating func decresePairs() {
+        if pairs > 2 {
+            pairs -= 1
+        } else {
+            pairs = 2
         }
     }
 }
