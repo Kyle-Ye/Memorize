@@ -10,9 +10,10 @@ import Combine
 import Foundation
 
 class EmojiMemoryThemeStore: ObservableObject {
+    typealias Theme = MemoryGame<String>.Theme
     static let identifier = "MemoryGameThemeStore"
     let name: String
-    @Published var themes: [MemoryGame<String>.Theme]
+    @Published var themes: [Theme]
     private var autosave: AnyCancellable?
 
     init(named name: String = "Emoji Game") {
@@ -22,7 +23,12 @@ class EmojiMemoryThemeStore: ObservableObject {
         autosave = $themes.sink { themes in
             UserDefaults.standard.set(themes.jsons, forKey: key)
         }
+        getDefault()
+    }
+}
 
+extension EmojiMemoryThemeStore {
+    func getDefault() {
         if themes.count == 0 {
             themes += [
                 .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0), cardFaceUpColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)),
@@ -34,6 +40,18 @@ class EmojiMemoryThemeStore: ObservableObject {
                 .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], pairs: 6, cardFaceDownColor: .pink, cardFaceUpColor: .gray),
             ]
         }
+    }
+
+    func applyThemeChange(_ theme: Theme) {
+        if let index = themes.firstIndex(matching: theme) {
+            themes[index] = theme
+        } else {
+            themes.append(theme)
+        }
+    }
+
+    var defaultTheme: Theme {
+        Theme(name: "", contents: [], pairs: 2, cardFaceDownColor: .purple, cardFaceUpColor: .purple)
     }
 }
 

@@ -38,7 +38,7 @@ struct ThemeView: View {
                 Text(theme.name)
                     .bold()
                     .font(.title)
-                    .foregroundColor(Color(theme.cardFaceDownColor))
+                    .foregroundColor(isEditing ? .primary : Color(theme.cardFaceDownColor))
                 Text("\(description) \(theme.contents.joined())")
                     .lineLimit(1)
             }
