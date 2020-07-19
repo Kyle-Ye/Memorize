@@ -158,7 +158,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
         }
     }
 
-    struct Theme: Hashable,Codable {
+    struct Theme: Hashable, Codable {
         internal init(name: String, contents: [CardContent], pairs: Int, cardFaceDownColor: UIColor.RGB, cardFaceUpColor: UIColor.RGB) {
             self.name = name
             self.contents = contents
@@ -183,6 +183,14 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
 
         var json: Data? {
             try? JSONEncoder().encode(self)
+        }
+
+        init?(json: Data?) {
+            if let json = json, let theme = try? JSONDecoder().decode(Theme.self, from: json) {
+                self = theme
+            } else {
+                return nil
+            }
         }
     }
 }

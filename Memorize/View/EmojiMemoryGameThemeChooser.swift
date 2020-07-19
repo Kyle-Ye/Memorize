@@ -8,7 +8,8 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemoryGameThemeChooser: View {
+    @EnvironmentObject var store: EmojiMemoryThemeStore
     @State private var showingAddTheme = false
     @State private var isRandomGame = false
     @State private var editMode: EditMode = .inactive
@@ -16,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(EmojiMemoryGame.themes, id: \.self) { theme in
+                ForEach(store.themes, id: \.self) { theme in
                     NavigationLink(destination: EmojiMemoryGameView()
                         .navigationBarTitleDisplayMode(.inline)
                         .environmentObject(EmojiMemoryGame(theme: theme))
@@ -64,9 +65,9 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct EmojiMemoryGameThemeChooser_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        EmojiMemoryGameThemeChooser()
             .environmentObject(EmojiMemoryGame())
     }
 }

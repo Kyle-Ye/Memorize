@@ -24,7 +24,7 @@ class EmojiMemoryGame: ObservableObject {
         .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊", "🐷", "🐔"], pairs: 4, cardFaceDownColor: .purple, cardFaceUpColor: .gray),
         .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], pairs: 4, cardFaceDownColor: .blue, cardFaceUpColor: .white),
         .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], pairs: 5, cardFaceDownColor: .green, cardFaceUpColor: .white),
-        .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], pairs: 6, cardFaceDownColor: .pink, cardFaceUpColor: .gray)
+        .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], pairs: 6, cardFaceDownColor: .pink, cardFaceUpColor: .gray),
     ]
 
     private static func createMemoryGame(theme: EmojiTheme? = nil) -> EmojiGame {
