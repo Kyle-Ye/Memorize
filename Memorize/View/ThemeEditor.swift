@@ -28,7 +28,6 @@ struct ThemeEditor: View {
                     .padding()
                 HStack {
                     Button("Cancel") {
-                        store.applyThemeChange(theme)
                         presentationMode.wrappedValue.dismiss()
                     }
                     .padding()
@@ -157,24 +156,31 @@ struct ThemeEditor: View {
         struct CardCountHint: View {
             var emojisCount: Int
             var pairs: Int
-            var message: String {
+            var message1: String {
                 "Should at 2 ~ \(emojisCount)(Emojis.count)"
+            }
+
+            var message2: String {
+                "Add more emojis first!"
             }
 
             var body: some View {
                 HStack {
                     Text("Card Count").bold().font(.headline)
-                    if emojisCount >= 2 && pairs < 2 {
-                        Text(message)
+                    if emojisCount >= 2 {
+                        if pairs < 2 {
+                            Text(message1)
+                                .foregroundColor(.red)
+                        } else {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .imageScale(.large)
+                            Spacer()
+                            Text("range 2 ~ \(emojisCount)")
+                        }
+                    } else {
+                        Text(message2)
                             .foregroundColor(.red)
-                    } else if emojisCount >= 2 {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
-                            .imageScale(.large)
-                    }
-                    Spacer()
-                    if pairs >= 2 {
-                        Text("range 2 ~ \(emojisCount)")
                     }
                 }
                 .textCase(nil)
