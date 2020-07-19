@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		271451D5249CE26B00081975 /* Dropfy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271451D4249CE26B00081975 /* Dropfy.swift */; };
-		271451D7249CECAA00081975 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271451D6249CECAA00081975 /* RoundButton.swift */; };
 		271451D9249CED4D00081975 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271451D8249CED4D00081975 /* ThemeEditor.swift */; };
 		271822402498706A0017725F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718223F2498706A0017725F /* AppDelegate.swift */; };
 		271822422498706A0017725F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271822412498706A0017725F /* SceneDelegate.swift */; };
@@ -42,7 +41,6 @@
 
 /* Begin PBXFileReference section */
 		271451D4249CE26B00081975 /* Dropfy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dropfy.swift; sourceTree = "<group>"; };
-		271451D6249CECAA00081975 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		271451D8249CED4D00081975 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		2718223C2498706A0017725F /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2718223F2498706A0017725F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 				2761B9B9249BBFF800514EC7 /* ThemeView.swift */,
 				274C036D2499139300C2ED7E /* CardView.swift */,
 				279AE916249CAE51003F8915 /* ScoreView.swift */,
-				271451D6249CECAA00081975 /* RoundButton.swift */,
 				27668F3824C40E2300FC063D /* ColorCardChooser.swift */,
 			);
 			path = ItemView;
@@ -292,7 +289,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				271451D7249CECAA00081975 /* RoundButton.swift in Sources */,
 				271822402498706A0017725F /* AppDelegate.swift in Sources */,
 				279AE917249CAE51003F8915 /* ScoreView.swift in Sources */,
 				271451D5249CE26B00081975 /* Dropfy.swift in Sources */,

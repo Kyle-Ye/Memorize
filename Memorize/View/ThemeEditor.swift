@@ -27,14 +27,18 @@ struct ThemeEditor: View {
                     .font(.headline)
                     .padding()
                 HStack {
-                    Spacer()
-                    Button(action: {
+                    Button("Cancel") {
                         store.applyThemeChange(theme)
                         presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Done").padding()
-                    })
-                        .disabled(!validation)
+                    }
+                    .padding()
+                    Spacer()
+                    Button("Done") {
+                        store.applyThemeChange(theme)
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    .padding()
+                    .disabled(!validation)
                 }
             }
             Divider()
