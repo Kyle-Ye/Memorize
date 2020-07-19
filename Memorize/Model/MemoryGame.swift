@@ -218,6 +218,6 @@ extension MemoryGame.Theme {
     }
 
     mutating func addContents(_ contents: [CardContent]) {
-        self.contents += contents
+        self.contents = (self.contents + contents).unique
     }
 }
