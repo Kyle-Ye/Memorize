@@ -28,10 +28,10 @@ struct EmojiMemoryGameThemeChooser: View {
                         ThemeView(theme: theme, isEditing: editMode.isEditing)
                     }
                 }
-                .onDelete { _ in
-//                    indexSet.map { store.documents[$0] }.forEach { document in
-//                        store.removeDocument(document)
-//                    }
+                .onDelete { indexSet in
+                    indexSet.forEach { index in
+                        store.themes.remove(at: index)
+                    }
                 }
                 Button("Random".getLocalized()) {
                     isRandomGame = true
@@ -50,6 +50,7 @@ struct EmojiMemoryGameThemeChooser: View {
             .navigationBarItems(
                 leading: Button(
                     action: {
+                        showingAddTheme = true
 //                        store.addDocument()
                     }, label: {
                         Image(systemName: "plus").imageScale(.large)
@@ -59,7 +60,8 @@ struct EmojiMemoryGameThemeChooser: View {
             )
             .environment(\.editMode, $editMode)
             .sheet(isPresented: $showingAddTheme) {
-                NewThemeView()
+                ThemeEditor()
+                    .environmentObject(store)
             }
         }
     }

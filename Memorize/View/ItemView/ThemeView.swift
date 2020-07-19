@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ThemeView: View {
+    @EnvironmentObject var store: EmojiMemoryThemeStore
+    @State var editingTheme: Bool = false
     var theme: MemoryGame<String>.Theme
     var isEditing: Bool = false
 
@@ -24,6 +26,13 @@ struct ThemeView: View {
         HStack {
             if isEditing {
                 Image(systemName: "pencil.circle.fill").imageScale(.large).foregroundColor(Color(theme.cardFaceDownColor))
+                    .onTapGesture {
+                        editingTheme = true
+                    }
+                    .popover(isPresented: $editingTheme) {
+                        ThemeEditor(theme: theme)
+                            .environmentObject(store)
+                    }
             }
             VStack(alignment: .leading) {
                 Text(theme.name)

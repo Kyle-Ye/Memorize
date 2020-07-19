@@ -21,9 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        let contentView = EmojiMemoryGameView().environmentObject(game)
 
         let store = EmojiMemoryThemeStore()
-        if store.themes.count == 0 {
-            store.themes.append(.init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0), cardFaceUpColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)))
-        }
+
 
         let contentView = EmojiMemoryGameThemeChooser()
             .environmentObject(store)

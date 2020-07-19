@@ -22,6 +22,18 @@ class EmojiMemoryThemeStore: ObservableObject {
         autosave = $themes.sink { themes in
             UserDefaults.standard.set(themes.jsons, forKey: key)
         }
+
+        if themes.count == 0 {
+            themes += [
+                .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0), cardFaceUpColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)),
+                .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .orange, cardFaceUpColor: .white),
+                .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆", "😮", "😶"], pairs: 4, cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
+                .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊", "🐷", "🐔"], pairs: 4, cardFaceDownColor: .purple, cardFaceUpColor: .gray),
+                .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], pairs: 4, cardFaceDownColor: .blue, cardFaceUpColor: .white),
+                .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], pairs: 5, cardFaceDownColor: .green, cardFaceUpColor: .white),
+                .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], pairs: 6, cardFaceDownColor: .pink, cardFaceUpColor: .gray),
+            ]
+        }
     }
 }
 
