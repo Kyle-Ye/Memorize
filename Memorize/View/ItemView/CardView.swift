@@ -72,12 +72,12 @@ struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             HStack {
-                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: true, content: "🐶"))
-                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: false, content: "🐷"))
+                CardView(card: MemoryGame<String>.Card(id: 3, content: "🐶", isFaceUp: true))
+                CardView(card: MemoryGame<String>.Card(id: 3, content: "🐷", isFaceUp: false))
             }
             HStack {
-                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: false, content: "🐶"))
-                CardView(card: MemoryGame<String>.Card(id: 3, isFaceUp: true, content: "🐷"))
+                CardView(card: MemoryGame<String>.Card(id: 3, content: "🐶", isFaceUp: false))
+                CardView(card: MemoryGame<String>.Card(id: 3, content: "🐷", isFaceUp: true))
             }
         }
         .environmentObject(world)
