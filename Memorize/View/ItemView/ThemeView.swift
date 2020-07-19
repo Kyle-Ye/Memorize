@@ -49,9 +49,9 @@ struct ThemeView: View {
 struct ThemeView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ThemeView(theme: EmojiMemoryGame.themes.randomElement()!, editMode: .inactive)
-            ThemeView(theme: EmojiMemoryGame.themes.randomElement()!, editMode: .active)
-            ThemeView(theme: EmojiMemoryGame.themes.randomElement()!, editMode: .transient)
+            ThemeView(theme: EmojiMemoryThemeStore().themes.randomElement()!, editMode: .inactive)
+            ThemeView(theme: EmojiMemoryThemeStore().themes.randomElement()!, editMode: .active)
+            ThemeView(theme: EmojiMemoryThemeStore().themes.randomElement()!, editMode: .transient)
         }
     }
 }

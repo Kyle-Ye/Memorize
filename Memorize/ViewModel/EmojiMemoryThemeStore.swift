@@ -10,11 +10,9 @@ import Combine
 import Foundation
 
 class EmojiMemoryThemeStore: ObservableObject {
-    typealias Theme = MemoryGame<String>.Theme
-    static let identifier = "MemoryGameThemeStore"
-    let name: String
     @Published var themes: [Theme]
     private var autosave: AnyCancellable?
+    private let name: String
 
     init(named name: String = "Emoji Game") {
         self.name = name
@@ -28,6 +26,8 @@ class EmojiMemoryThemeStore: ObservableObject {
 }
 
 extension EmojiMemoryThemeStore {
+    typealias Theme = MemoryGame<String>.Theme
+    static let identifier = "MemoryGameThemeStore"
     func getDefault() {
         if themes.count == 0 {
             themes += [

@@ -12,20 +12,7 @@ struct EmojiMemoryGameThemeChooser: View {
     @EnvironmentObject var store: EmojiMemoryThemeStore
     @State private var showingAddTheme = false
     @State private var isRandomGame = false
-    @State private var editMode: EditMode = .inactive {
-        didSet {
-            switch editMode.self {
-            case EditMode.inactive:
-                print("1")
-            case EditMode.active:
-                print("2")
-            case EditMode.transient:
-                print("3")
-            @unknown default:
-                print("4")
-            }
-        }
-    }
+    @State private var editMode: EditMode = .inactive
 
     var body: some View {
         NavigationView {
@@ -46,15 +33,18 @@ struct EmojiMemoryGameThemeChooser: View {
                         store.themes.remove(at: index)
                     }
                 }
-                Button("Random".getLocalized()) {
-                    isRandomGame = true
+                HStack {
+                    Spacer()
+                    Button("Random".getLocalized()) {
+                        isRandomGame = true
+                    }
+                    Spacer()
                 }
             }
-            .listStyle(PlainListStyle())
             .background(
                 Group {
                     if isRandomGame {
-                        NavigationLink(destination: EmojiMemoryGameView().environmentObject(EmojiMemoryGame()), isActive: $isRandomGame, label: {
+                        NavigationLink(destination: EmojiMemoryGameView().environmentObject(EmojiMemoryGame(theme: store.themes.randomElement()!)), isActive: $isRandomGame, label: {
                             EmptyView()
                         })
                     }

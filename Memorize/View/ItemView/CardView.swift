@@ -68,7 +68,7 @@ struct CardView: View {
 }
 
 struct CardView_Previews: PreviewProvider {
-    static let world = EmojiMemoryGame()
+    static let world = EmojiMemoryGame(theme: EmojiMemoryThemeStore().themes.randomElement()!)
     static var previews: some View {
         VStack {
             HStack {

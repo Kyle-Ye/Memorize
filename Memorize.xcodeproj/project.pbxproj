@@ -29,6 +29,7 @@
 		27668F3724C3DD1F00FC063D /* EmojiMemoryThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27668F3624C3DD1F00FC063D /* EmojiMemoryThemeStore.swift */; };
 		27668F3924C40E2300FC063D /* ColorCardChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27668F3824C40E2300FC063D /* ColorCardChooser.swift */; };
 		27668F3B24C424CF00FC063D /* Array+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27668F3A24C424CF00FC063D /* Array+Hashable.swift */; };
+		27668F3D24C43F0100FC063D /* ScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27668F3C24C43F0100FC063D /* ScoreData.swift */; };
 		279AE917249CAE51003F8915 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AE916249CAE51003F8915 /* ScoreView.swift */; };
 		27A3EE01249B487B00BB64B7 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A3EE00249B487B00BB64B7 /* Pie.swift */; };
 		27A3EE03249B519700BB64B7 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A3EE02249B519700BB64B7 /* Cardify.swift */; };
@@ -64,6 +65,7 @@
 		27668F3624C3DD1F00FC063D /* EmojiMemoryThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryThemeStore.swift; sourceTree = "<group>"; };
 		27668F3824C40E2300FC063D /* ColorCardChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCardChooser.swift; sourceTree = "<group>"; };
 		27668F3A24C424CF00FC063D /* Array+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Hashable.swift"; sourceTree = "<group>"; };
+		27668F3C24C43F0100FC063D /* ScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreData.swift; sourceTree = "<group>"; };
 		279AE916249CAE51003F8915 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		27A3EE00249B487B00BB64B7 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		27A3EE02249B519700BB64B7 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				274C03652498CB0000C2ED7E /* MemoryGame.swift */,
+				27668F3C24C43F0100FC063D /* ScoreData.swift */,
 				27E2DBC2249D06F900F57452 /* Result.swift */,
 			);
 			path = Model;
@@ -291,6 +294,7 @@
 			files = (
 				271822402498706A0017725F /* AppDelegate.swift in Sources */,
 				279AE917249CAE51003F8915 /* ScoreView.swift in Sources */,
+				27668F3D24C43F0100FC063D /* ScoreData.swift in Sources */,
 				271451D5249CE26B00081975 /* Dropfy.swift in Sources */,
 				27196D56249A54630063B7CD /* EmojiMemoryGameView.swift in Sources */,
 				27668F3924C40E2300FC063D /* ColorCardChooser.swift in Sources */,

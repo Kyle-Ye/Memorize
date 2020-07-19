@@ -32,6 +32,7 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
 
     struct Card: Identifiable {
         var id: Int
+        var content: CardContent
         var isFaceUp = false {
             didSet {
                 if isFaceUp {
@@ -49,8 +50,6 @@ struct MemoryGame<CardContent> where CardContent: Hashable, CardContent: Codable
                 }
             }
         }
-
-        var content: CardContent
 
         // MARK: - Bonus Time
 

@@ -9,15 +9,6 @@
 // View
 import SwiftUI
 
-struct scoreData: Identifiable {
-    var id: Int {
-        index
-    }
-
-    var content: Int
-    var index: Int
-}
-
 struct EmojiMemoryGameView: View {
     @EnvironmentObject var game: EmojiMemoryGame
     @State private var scoreDatas = [scoreData]()
@@ -81,7 +72,7 @@ struct EmojiMemoryGameView: View {
 }
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
-    static let world = EmojiMemoryGame()
+    static let world = EmojiMemoryGame(theme:EmojiMemoryThemeStore().themes.randomElement()!)
     static var previews: some View {
         Group {
             EmojiMemoryGameView()

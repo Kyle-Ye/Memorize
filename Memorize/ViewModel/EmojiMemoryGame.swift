@@ -6,57 +6,39 @@
 //  Copyright © 2020 KyleYe. All rights reserved.
 //
 
-// ViewModel
 import AVFoundation
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<Emoji>
 
-    init(theme: EmojiTheme? = nil) {
+    init(theme: EmojiTheme) {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
+}
 
-    private(set) static var themes: [EmojiTheme] = [
-        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0), cardFaceUpColor: .init(red: 0.2, green: 0.3, blue: 0.2, alpha: 1.0)),
-        .init(name: "Halloween".getLocalized(), contents: ["👻", "🎃", "🕷", "☠️", "🙀", "😱"], pairs: 4, cardFaceDownColor: .orange, cardFaceUpColor: .white),
-        .init(name: "Faces".getLocalized(), contents: ["😀", "😃", "😄", "😁", "😆", "😮", "😶"], pairs: 4, cardFaceDownColor: .yellow, cardFaceUpColor: .gray),
-        .init(name: "Animals".getLocalized(), contents: ["🐶", "🐱", "🐭", "🐹", "🐰", "🙊", "🐷", "🐔"], pairs: 4, cardFaceDownColor: .purple, cardFaceUpColor: .gray),
-        .init(name: "Fruits".getLocalized(), contents: ["🍏", "🍎", "🍐", "🍊", "🍋", "🥭", "🍓", "🍇"], pairs: 4, cardFaceDownColor: .blue, cardFaceUpColor: .white),
-        .init(name: "Balls".getLocalized(), contents: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"], pairs: 5, cardFaceDownColor: .green, cardFaceUpColor: .white),
-        .init(name: "Music".getLocalized(), contents: ["🎹", "🥁", "🎼", "🎷", "🎻", "🪕", "🎤"], pairs: 6, cardFaceDownColor: .pink, cardFaceUpColor: .gray),
-    ]
+extension EmojiMemoryGame {
+    // MARK: - Type Alias
 
-    private static func createMemoryGame(theme: EmojiTheme? = nil) -> EmojiGame {
-        if let theme = theme {
-            let contents = theme.contents.shuffled()
-            return MemoryGame<String>(theme: theme) { pairIndex in
-                contents[pairIndex]
-            }
-        } else {
-            let theme = themes.randomElement()!
-            let contents = theme.contents.shuffled()
-            return MemoryGame<String>(theme: theme) { pairIndex in
-                contents[pairIndex]
-            }
-        }
-    }
+    public typealias Emoji = String
+    public typealias EmojiGame = MemoryGame<Emoji>
+    public typealias EmojiTheme = EmojiGame.Theme
+    public typealias EmojiCard = EmojiGame.Card
 
     // MARK: - Access to the Model
 
-    var cards: [EmojiCard] {
-        model.cards
-    }
+    var cards: [EmojiCard] { model.cards }
+    var score: Int { model.score }
+    var theme: EmojiTheme { model.theme }
 
-    var score: Int {
-        model.score
-    }
+    // MARK: - Intents
 
-    var theme: EmojiTheme {
-        model.theme
+    private static func createMemoryGame(theme: EmojiTheme) -> EmojiGame {
+        let contents = theme.contents.shuffled()
+        return MemoryGame<String>(theme: theme) { pairIndex in
+            contents[pairIndex]
+        }
     }
-
-    // MARK: - Intent(s)
 
     func choose(card: EmojiCard) {
         objectWillChange.send()
@@ -68,13 +50,11 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
 
-    func randomGame() {
-        model = EmojiMemoryGame.createMemoryGame()
-    }
-
     func resetGame() {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
+
+    // MARK: - Audio Extension
 
     private static var audioPlayer = AVAudioPlayer()
 
@@ -104,11 +84,4 @@ class EmojiMemoryGame: ObservableObject {
     static func playFail() {
         playSound(soundPath: failSoundPath)
     }
-}
-
-extension EmojiMemoryGame {
-    public typealias Emoji = String
-    public typealias EmojiGame = MemoryGame<Emoji>
-    public typealias EmojiTheme = EmojiGame.Theme
-    public typealias EmojiCard = EmojiGame.Card
 }
