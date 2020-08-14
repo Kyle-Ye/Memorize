@@ -77,7 +77,9 @@ struct ThemeEditor: View {
                         Text(message)
                             .foregroundColor(.red)
                     } else {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .imageScale(.large)
                     }
                 }
                 .textCase(nil)
@@ -127,7 +129,9 @@ struct ThemeEditor: View {
                         Text(message1)
                             .foregroundColor(.red)
                     } else {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .imageScale(.large)
                     }
                     Spacer()
                     if emojisCount >= 2 {
@@ -193,7 +197,9 @@ struct ThemeEditor: View {
         var body: some View {
             Section(header: HStack {
                 Text("Face Down Color").bold().font(.headline).textCase(nil)
-                Image(systemName: "checkmark.circle.fill").foregroundColor(Color(theme.cardFaceDownColor))
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(Color(theme.cardFaceDownColor))
+                    .imageScale(.large)
             }) {
                 ColorChooserSection(themeColor: $theme.cardFaceDownColor)
             }
@@ -202,25 +208,49 @@ struct ThemeEditor: View {
 
     struct FaceUpColorChooserSection: View {
         @Binding var theme: Theme
+        @State private var content = ""
         var body: some View {
             Section(header: HStack {
                 Text("Face Up Color").bold().font(.headline).textCase(nil)
-                Image(systemName: "checkmark.circle.fill").foregroundColor(Color(theme.cardFaceUpColor))
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(Color(theme.cardFaceUpColor))
+                    .imageScale(.large)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(theme.contents, id: \.self) { emoji in
+                            Text(emoji)
+                                .onTapGesture {
+                                    content = emoji
+                                }
+                        }
+                    }
+                }
+                .padding(.horizontal, 10)
+                .onAppear {
+                    content = theme.contents.first ?? ""
+                }
             }) {
-                ColorChooserSection(themeColor: $theme.cardFaceUpColor)
+                ColorChooserSection(themeColor: $theme.cardFaceUpColor, strokeColor: theme.cardFaceDownColor, content: content)
             }
         }
     }
 
     struct ColorChooserSection: View {
         @Binding var themeColor: UIColor.RGB
+        var strokeColor: UIColor.RGB?
+        var content: String = "🎃"
         var body: some View {
             Section {
                 Grid(ThemeEditor.colorSet, id: \.self) { color in
-                    ColorCardChooser(color: color, choose: UIColor(color).rgb == themeColor)
-                        .onTapGesture {
-                            themeColor = UIColor(color).rgb
+                    ZStack {
+                        ColorCardChooser(color: color, choose: UIColor(color).rgb == themeColor, strokeColor: strokeColor == nil ? color : Color(strokeColor!))
+                            .onTapGesture {
+                                themeColor = UIColor(color).rgb
+                            }
+                        if strokeColor != nil {
+                            Text(content)
                         }
+                    }
                 }
                 .frame(height: colorHeight)
             }

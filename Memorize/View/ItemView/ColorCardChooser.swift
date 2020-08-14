@@ -11,6 +11,7 @@ import SwiftUI
 struct ColorCardChooser: View {
     var color: Color
     var choose: Bool = true
+    var strokeColor: Color = .gray
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottomTrailing) {
@@ -19,7 +20,7 @@ struct ColorCardChooser: View {
                     .foregroundColor(color)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(Color.gray, lineWidth: 2)
+                            .stroke(strokeColor, lineWidth: edgeLineWidth)
                     )
                 Image(systemName: "checkmark.circle")
                     .foregroundColor(color != .white ? .white : .black)

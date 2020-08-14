@@ -72,7 +72,7 @@ struct EmojiMemoryGameView: View {
 }
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
-    static let world = EmojiMemoryGame(theme:EmojiMemoryThemeStore().themes.randomElement()!)
+    static let world = EmojiMemoryGame(theme: EmojiMemoryThemeStore().themes.randomElement()!)
     static var previews: some View {
         Group {
             EmojiMemoryGameView()
