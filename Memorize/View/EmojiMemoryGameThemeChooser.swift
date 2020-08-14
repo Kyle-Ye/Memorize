@@ -13,10 +13,11 @@ struct EmojiMemoryGameThemeChooser: View {
     @State private var showingAddTheme = false
     @State private var isRandomGame = false
     @State private var editMode: EditMode = .inactive
-
+    @State private var selection: EmojiMemoryGame.EmojiTheme?
+    
     var body: some View {
         NavigationView {
-            List {
+            List(selection: $selection) {
                 ForEach(store.themes, id: \.self) { theme in
                     NavigationLink(destination: EmojiMemoryGameView()
                         .navigationBarTitleDisplayMode(.inline)
@@ -36,19 +37,11 @@ struct EmojiMemoryGameThemeChooser: View {
                 HStack {
                     Spacer()
                     Button("Random".getLocalized()) {
-                        isRandomGame = true
+                        selection = EmojiMemoryThemeStore().themes.randomElement()!
                     }
                     Spacer()
                 }
             }
-            .background(
-                Group {
-                    if isRandomGame {
-                        NavigationLink(destination: EmojiMemoryGameView().environmentObject(EmojiMemoryGame(theme: store.themes.randomElement()!)), isActive: $isRandomGame, label: {
-                            EmptyView()
-                        })
-                    }
-            })
             .navigationBarTitle("Themes".getLocalized())
             .navigationBarItems(
                 leading: Button(
