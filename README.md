@@ -13,4 +13,5 @@
 -   [x] Persistence
 
 ## Demo
-![image](./gif/demo.gif)
+![image](./images/demo1.png)
+![image](./images/demo2.png)
