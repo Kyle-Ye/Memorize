@@ -55,3 +55,9 @@ struct ThemeView_Previews: PreviewProvider {
         }
     }
 }
+
+#if os(macOS)
+enum EditMode {
+    case inactive, active, transient
+}
+#endif

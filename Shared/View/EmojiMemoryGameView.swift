@@ -49,17 +49,19 @@ struct EmojiMemoryGameView: View {
                     .foregroundColor(Color(game.theme.cardFaceDownColor))
             }
         }
+        #if os(iOS)
         .navigationBarItems(trailing: Button("Reset".getLocalized()) {
             withAnimation(.easeInOut) {
                 game.resetGame()
             }
         })
         .navigationBarTitle(game.theme.name)
+        #endif
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Game Over".getLocalized()), message: Text("\("Your score is".getLocalized()) \(game.score)"),
                   dismissButton: .default(Text("Reset".getLocalized()), action: {
                       game.resetGame()
-            }))
+                  }))
         }
     }
 

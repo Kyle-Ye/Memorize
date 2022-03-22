@@ -19,11 +19,13 @@ struct EmojiMemoryGameThemeChooser: View {
             List {
                 ForEach(store.themes, id: \.self) { theme in
                     NavigationLink(destination: EmojiMemoryGameView()
-                        .navigationBarTitleDisplayMode(.inline)
-                        .environmentObject(EmojiMemoryGame(theme: theme))
-                        .onAppear {
-                            print("json = \(theme.json?.utf8 ?? "nil")")
-                        }
+                        #if os(iOS)
+                            .navigationBarTitleDisplayMode(.inline)
+                        #endif
+                            .environmentObject(EmojiMemoryGame(theme: theme))
+                            .onAppear {
+                                print("json = \(theme.json?.utf8 ?? "nil")")
+                            }
                     ) {
                         ThemeView(theme: theme, editMode: editMode)
                     }
@@ -48,23 +50,25 @@ struct EmojiMemoryGameThemeChooser: View {
                             EmptyView()
                         })
                     }
-            })
-            .navigationBarTitle("Themes".getLocalized())
-            .navigationBarItems(
-                leading: Button(
-                    action: {
-                        showingAddTheme = true
-                    }, label: {
-                        Image(systemName: "plus").imageScale(.large)
-                    }
-                ),
-                trailing: EditButton()
-            )
-            .environment(\.editMode, $editMode)
-            .sheet(isPresented: $showingAddTheme) {
-                ThemeEditor()
-                    .environmentObject(store)
-            }
+                })
+            #if os(iOS)
+                .navigationBarTitle("Themes".getLocalized())
+                .navigationBarItems(
+                    leading: Button(
+                        action: {
+                            showingAddTheme = true
+                        }, label: {
+                            Image(systemName: "plus").imageScale(.large)
+                        }
+                    ),
+                    trailing: EditButton()
+                )
+                .environment(\.editMode, $editMode)
+            #endif
+                .sheet(isPresented: $showingAddTheme) {
+                    ThemeEditor()
+                        .environmentObject(store)
+                }
         }
     }
 }

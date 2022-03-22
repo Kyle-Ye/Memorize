@@ -7,27 +7,37 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
-
 extension Color {
     init(_ rgb: UIColor.RGB) {
-        self.init(UIColor(rgb))
+        self.init(uiColor: UIColor(rgb))
     }
 }
 
-extension UIColor {
-    public struct RGB: Hashable, Codable {
+#elseif canImport(AppKit)
+import AppKit
+typealias UIColor = NSColor
+extension Color {
+    init(_ rgb: UIColor.RGB) {
+        self.init(nsColor: UIColor(rgb))
+    }
+}
+#endif
+
+public extension UIColor {
+    struct RGB: Hashable, Codable {
         var red: CGFloat
         var green: CGFloat
         var blue: CGFloat
         var alpha: CGFloat
     }
 
-    convenience init(_ rgb: RGB) {
+    internal convenience init(_ rgb: RGB) {
         self.init(red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: rgb.alpha)
     }
 
-    public var rgb: RGB {
+    var rgb: RGB {
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
